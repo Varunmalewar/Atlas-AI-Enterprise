@@ -1,0 +1,17 @@
+[project]
+name = "atlas-ai-enterprise"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Varun Malewar", email = "vmmalewar@gmail.com" }
+]
+requires-python = ">=3.13"
+dependencies = []
+
+[project.scripts]
+atlas-ai-enterprise = "atlas_ai_enterprise:main"
+
+[build-system]
+requires = ["uv_build>=0.12.17,<0.13.0"]
+build-backend = "uv_build"
