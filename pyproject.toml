@@ -7,7 +7,10 @@ authors = [
     { name = "Varun Malewar", email = "vmmalewar@gmail.com" }
 ]
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "boto3>=1.43.123",
+    "dotenv>=0.9.9",
+]
 
 [project.scripts]
 atlas-ai-enterprise = "atlas_ai_enterprise:main"
