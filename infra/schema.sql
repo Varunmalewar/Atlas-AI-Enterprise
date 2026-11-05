@@ -21,6 +21,9 @@ CREATE TABLE IF NOT EXISTS approvals (
  requester text NOT NULL, question text NOT NULL, status text NOT NULL DEFAULT 'pending',
  reviewer text, created_at timestamptz NOT NULL DEFAULT now(), reviewed_at timestamptz
 );
+ALTER TABLE approvals ADD COLUMN IF NOT EXISTS action text;
+ALTER TABLE approvals ADD COLUMN IF NOT EXISTS document_id uuid;
+ALTER TABLE approvals ADD COLUMN IF NOT EXISTS executed boolean NOT NULL DEFAULT false;
 CREATE INDEX IF NOT EXISTS approvals_tenant_idx ON approvals(tenant_id,status);
 
 -- Persistent short-term conversation memory (Aurora, no local database).
