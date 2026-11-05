@@ -1,9 +1,11 @@
 // Simple single-workspace UI. No login, tokens, or user accounts.
 const $=id=>document.getElementById(id);
 // Single-workspace conversation identifier, not an authentication token.
-let conversationId=sessionStorage.getItem('atlas_conversation_id')||crypto.randomUUID();
+// crypto.randomUUID() only exists on HTTPS/localhost; the EC2 deployment is plain HTTP.
+const uuid=()=>crypto.randomUUID?crypto.randomUUID():'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,c=>{const r=Math.random()*16|0;return(c==='x'?r:r&3|8).toString(16)});
+let conversationId=sessionStorage.getItem('atlas_conversation_id')||uuid();
 sessionStorage.setItem('atlas_conversation_id',conversationId);
-$('newChat').onclick=()=>{conversationId=crypto.randomUUID();sessionStorage.setItem('atlas_conversation_id',conversationId);$('messages').replaceChildren();toast('Started a new conversation')};
+$('newChat').onclick=()=>{conversationId=uuid();sessionStorage.setItem('atlas_conversation_id',conversationId);$('messages').replaceChildren();toast('Started a new conversation')};
 
 const toast=msg=>{const el=$('toast');el.textContent=msg;el.style.display='block';setTimeout(()=>el.style.display='none',4000)};
 const api=async(path,options={})=>{const res=await fetch(path,{...options,headers:{'Content-Type':'application/json',...(options.headers||{})}});const data=await res.json();if(!res.ok)throw Error(data.detail||'Request failed');return data};
