@@ -6,7 +6,7 @@
 
 **Document intelligence · Conversational memory · Guardrails · Human review · Observability · CI/CD**
 
-### 🚀 Live demo: [http://16.178.46.184:8000](http://16.178.46.184:8000)
+### 🚀 Live demo: [atlas-enterprise-ai.duckdns.org](https://atlas-enterprise-ai.duckdns.org)
 
 [Overview](#overview) · [Architecture](#architecture) · [Quick Start](#quick-start) · [CI/CD Deployment](#cicd-deployment-to-aws) · [API](#api-reference) · [Security](#security-and-production-readiness)
 

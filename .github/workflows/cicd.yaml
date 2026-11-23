@@ -291,6 +291,27 @@ jobs:
             "$IMAGE"
 
       # ----------------------------------------
+      # HTTPS (Caddy + Let's Encrypt) - runs only when the APP_DOMAIN repo variable is set
+      # ----------------------------------------
+
+      - name: Start HTTPS Proxy
+        if: ${{ vars.APP_DOMAIN != '' }}
+        env:
+          APP_DOMAIN: ${{ vars.APP_DOMAIN }}
+        run: |
+          set -euo pipefail
+          docker rm -f atlas-caddy || true
+          # The named volume keeps issued certificates across redeploys (avoids Let's Encrypt rate limits).
+          docker run -d \
+            --name atlas-caddy \
+            --restart unless-stopped \
+            --add-host host.docker.internal:host-gateway \
+            -p 80:80 -p 443:443 \
+            -v atlas_caddy_data:/data \
+            caddy:2 \
+            caddy reverse-proxy --from "$APP_DOMAIN" --to host.docker.internal:8000
+
+      # ----------------------------------------
       # VERIFY DEPLOYMENT
       # ----------------------------------------
 
